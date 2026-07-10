@@ -76,9 +76,12 @@ table{border-collapse:collapse;width:100%;min-width:1700px}th,td{padding:10px;bo
 @media(max-width:1100px){.span-4,.span-6,.span-8{grid-column:span 12}.form-grid{grid-template-columns:repeat(2,1fr)}.field.span4{grid-column:span 2}.report-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:-285px;width:270px;transition:.2s}.app.mobile-menu .sidebar{left:0}.content{padding:12px}.header{padding:10px}.header .hide-mobile{display:none}.page-head{flex-direction:column}.form-grid{grid-template-columns:1fr}.field.span2,.field.span4{grid-column:span 1}.dashboard-grid{display:block}.dashboard-grid .card{margin-bottom:12px}.grid-kpi{grid-template-columns:repeat(2,1fr)}}
 @media print{.sidebar,.header,.toolbar,.page-head .actions-head,.btn,.icon-btn{display:none!important}.app{display:block}.view{display:none!important}.view.active{display:block!important}.content{padding:0}.card,.table-wrap{box-shadow:none;border:1px solid #ccc}body{background:#fff;color:#000}}
+
+#passwordGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#0d2b57}.password-box{background:#fff;padding:40px;border-radius:16px;max-width:380px;width:90%;text-align:center}.password-box input,.password-box button{width:100%;padding:12px;margin-top:12px}#passwordError{display:none;color:red}
 </style>
 </head>
 <body>
+<div id='passwordGate'><div class='password-box'><h2>CTO Executive Cockpit</h2><input id='accessPassword' type='password' placeholder='Password'><button id='accessButton' type='button'>Accedi</button><div id='passwordError'>Password non corretta</div></div></div>
 <div id="app" class="app">
   <aside class="sidebar">
     <div class="brand"><div class="logo">CTO</div><div class="brand-copy"><strong>Executive Cockpit</strong><small>Technology Portfolio</small></div></div>
@@ -651,6 +654,10 @@ const Export = {
 
 window.UI=UI;window.Actions=Actions;window.Export=Export;window.Reports=Reports;
 UI.init();
+
+const ACCESS_PASSWORD='2013!';
+function unlockCockpit(){if(document.getElementById('accessPassword').value===ACCESS_PASSWORD){sessionStorage.setItem('ctoAuth','1');document.getElementById('passwordGate').style.display='none';}else{document.getElementById('passwordError').style.display='block';}}
+document.addEventListener('DOMContentLoaded',()=>{if(sessionStorage.getItem('ctoAuth')==='1')document.getElementById('passwordGate').style.display='none';document.getElementById('accessButton').onclick=unlockCockpit;document.getElementById('accessPassword').onkeydown=e=>{if(e.key==='Enter')unlockCockpit();};});
 </script>
 </body>
 </html>
