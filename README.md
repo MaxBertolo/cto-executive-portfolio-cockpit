@@ -1,130 +1,50 @@
 # CTO Executive Portfolio Cockpit
 
-A complete, standalone executive portfolio governance application for managing technology initiatives across Infrastructure, Mobile, Broadband, CDN, Enterprise Network, TV, AI, Innovation, Compliance, Budget, Corporate, HR, Revenue and future areas.
+Applicazione web statica per la gestione del portfolio tecnologico CTO.
 
-The application is built entirely with:
+## Funzioni principali
 
-- HTML
-- CSS
-- Vanilla JavaScript
-- Browser LocalStorage
+- Dashboard sintetica
+- Portfolio Table modificabile
+- Kanban
+- Timeline
+- Roadmap
+- Gestione categorie
+- Ricerca e filtri
+- Commenti per attività
+- Salvataggio automatico in LocalStorage
+- Backup JSON
+- Tema chiaro/scuro
+- Accesso tramite password
 
-No backend, database, external libraries, build process or installation is required.
-
-## Main features
-
-- Executive dashboard with KPIs and charts
-- Activity management
-- Category management
-- Drag and drop
-- Table, Kanban, Timeline and Roadmap views
-- Global search and advanced filters
-- Smart alerts
-- Executive, weekly, monthly, quarterly and annual reports
-- CSV, Excel-compatible and JSON export
-- Browser print / PDF export
-- Full backup and restore
-- Light and dark themes
-- Responsive interface
-- Automatic LocalStorage persistence
-- Keyboard shortcuts
-
-## Run locally
-
-Download the repository and open:
+## Password
 
 ```text
-index.html
+2013!
 ```
 
-in a modern browser.
+> Nota: la password è inserita direttamente nel codice HTML e rappresenta solo una protezione semplice, non un'autenticazione sicura.
 
-No local server is required.
+## Pubblicazione con GitHub Pages
 
-## Publish with GitHub Pages
-
-1. Create a new GitHub repository.
-2. Upload all files from this project.
-3. Open the repository settings.
-4. Select **Pages**.
-5. Under **Build and deployment**, choose:
-   - Source: `Deploy from a branch`
+1. Crea un repository GitHub.
+2. Carica nella root del repository tutti i file contenuti in questa cartella.
+3. Vai in `Settings` → `Pages`.
+4. In `Build and deployment`, seleziona `Deploy from a branch`.
+5. Seleziona:
    - Branch: `main`
-   - Folder: `/root`
-6. Save the configuration.
+   - Folder: `/ (root)`
+6. Salva.
+7. Attendi il completamento del deployment.
 
-The application will then be available through the GitHub Pages URL assigned to the repository.
-
-## LocalStorage
-
-All activities, categories, settings and timeline events are stored in the browser LocalStorage.
-
-Important:
-
-- Data is associated with the browser and device being used.
-- Clearing browser data may remove the saved portfolio.
-- Use the built-in Backup function regularly.
-- The generated JSON backup can be restored from the application.
-
-## Keyboard shortcuts
-
-| Shortcut | Action |
-|---|---|
-| Ctrl / Cmd + N | New activity |
-| Ctrl / Cmd + F | Global search |
-| Ctrl / Cmd + K | Quick search |
-| Ctrl / Cmd + S | Full backup |
-| Ctrl / Cmd + E | CSV export |
-
-## Project structure
+L'indirizzo sarà simile a:
 
 ```text
-cto-executive-portfolio-cockpit/
-├── index.html
-├── README.md
-├── LICENSE
-└── .gitignore
+https://TUO-USERNAME.github.io/NOME-REPOSITORY/
 ```
 
-## Architecture
+## Dati
 
-The application is structured into modular JavaScript sections:
+I dati sono salvati nel LocalStorage del browser.
 
-- Configuration
-- Utilities
-- State and persistence
-- Search and filters
-- Metrics and alerts
-- UI rendering
-- Task actions
-- Canvas charts
-- Reporting
-- Export, backup and restore
-
-This structure makes the project suitable for later evolution into a full web application with APIs, authentication and a backend database.
-
-## Browser compatibility
-
-Recommended browsers:
-
-- Google Chrome
-- Microsoft Edge
-- Mozilla Firefox
-- Safari
-
-## Security and privacy
-
-The application does not send data to external services.
-
-All portfolio information remains in the browser unless the user exports or backs it up manually.
-
-## License
-
-Released under the MIT License.
-
-
-## Public deployment
-
-This repository includes a GitHub Actions workflow for automatic deployment to GitHub Pages.
-
-See `DEPLOYMENT.md` for the complete procedure and information about LocalStorage limitations.
+Questo significa che i dati non vengono automaticamente sincronizzati tra computer e telefono.

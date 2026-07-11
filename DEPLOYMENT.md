@@ -1,52 +1,43 @@
-# Pubblicazione online con GitHub Pages
+# ISTRUZIONI GITHUB PASSO PASSO
 
-Questa versione è già configurata per essere pubblicata online tramite GitHub Actions.
+## File da caricare
 
-## Procedura
+Carica nella pagina principale del repository:
 
-1. Crea un repository pubblico su GitHub.
-2. Carica tutti i file e le cartelle presenti in questo progetto.
-3. Assicurati che il branch principale si chiami `main`.
-4. Apri `Settings`.
-5. Vai in `Pages`.
-6. In `Build and deployment`, scegli `GitHub Actions`.
-7. Apri la scheda `Actions`.
-8. Attendi il completamento del workflow `Deploy CTO Cockpit to GitHub Pages`.
+- `index.html`
+- `README.md`
+- `DEPLOYMENT.md`
+- `LICENSE`
+- `.gitignore`
+- `.nojekyll`
 
-L'indirizzo pubblico sarà simile a:
+Non caricare la cartella esterna: carica direttamente i file.
 
-```text
-https://TUO-USERNAME.github.io/NOME-REPOSITORY/
-```
+## Sostituzione di un vecchio index.html
 
-## Accesso dall'esterno
+1. Apri il repository.
+2. Seleziona `Add file`.
+3. Premi `Upload files`.
+4. Trascina il nuovo `index.html`.
+5. GitHub riconoscerà che il file esiste già.
+6. Premi `Commit changes`.
 
-La pagina sarà raggiungibile:
+## Verifica pubblicazione
 
-- da computer esterni
-- da smartphone e tablet
-- da reti aziendali o domestiche
-- tramite HTTPS
+1. Apri `Actions`.
+2. Controlla che il deployment sia verde.
+3. Vai in `Settings` → `Pages`.
+4. Apri l'indirizzo pubblico.
+5. Su Mac aggiorna con `Cmd + Shift + R`.
+6. Su Windows aggiorna con `Ctrl + F5`.
 
-Il repository deve essere pubblico per utilizzare GitHub Pages gratuitamente con la configurazione standard.
+## Verifica funzionale
 
-## Importante: condivisione dei dati
+Controlla:
 
-GitHub Pages pubblica l'applicazione, ma non centralizza i dati.
-
-Il LocalStorage è specifico per:
-
-- browser
-- dispositivo
-- profilo utente
-- dominio della pagina
-
-Questo significa che due utenti che aprono la stessa pagina vedranno inizialmente gli stessi dati pre-caricati, ma le modifiche successive resteranno locali sul loro browser.
-
-Per avere un portafoglio realmente condiviso e sincronizzato tra più utenti serve aggiungere un backend o un servizio cloud, ad esempio:
-
-- Supabase
-- Firebase
-- Microsoft Dataverse
-- SharePoint / Microsoft Lists
-- API aziendale con database
+- login con password `2013!`
+- apertura attività dalla Portfolio Table
+- modifica Owner, Descrizione, Stato, Due Date e Next Action
+- modifica flag Mail e Telefonata
+- aggiunta commenti
+- salvataggio dopo il refresh della pagina
