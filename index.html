@@ -24,9 +24,38 @@ main{min-width:0}.header{position:sticky;top:0;z-index:10;display:flex;gap:10px;
 #gate{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#081a35,#0d2b57)}.login{background:#fff;color:#172033;width:min(390px,90vw);padding:35px;border-radius:17px;text-align:center}.login input,.login button{width:100%;padding:13px;margin-top:12px;border-radius:9px}.login input{border:1px solid #ddd}.login button{border:0;background:#165dff;color:#fff;font-weight:800}#err{display:none;color:#d00;margin-top:10px}
 .toast{position:fixed;right:18px;bottom:18px;background:#13213a;color:#fff;padding:11px 15px;border-radius:9px}
 @media(max-width:760px){.app{grid-template-columns:1fr}aside{position:fixed;left:-270px;width:250px;z-index:20;transition:.2s}.app.menu aside{left:0}.content{padding:12px}.hide{display:none}.head{flex-direction:column}.grid{grid-template-columns:1fr}.full{grid-column:auto}}
+
+#passwordGate{
+  position:fixed;inset:0;z-index:99999;display:flex;
+  align-items:center;justify-content:center;padding:20px;
+  background:linear-gradient(135deg,#081a35,#0d2b57)
+}
+.password-box{
+  width:min(390px,92vw);padding:38px;border-radius:18px;
+  background:#fff;color:#172033;text-align:center;
+  box-shadow:0 25px 80px rgba(0,0,0,.35)
+}
+.password-box input,.password-box button{
+  width:100%;padding:13px;margin-top:12px;border-radius:9px
+}
+.password-box input{border:1px solid #dfe6ef}
+.password-box button{border:0;background:#165dff;color:#fff;font-weight:800}
+#passwordError{display:none;color:#dc2626;margin-top:12px;font-weight:700}
+
 </style>
 </head>
 <body>
+
+<div id="passwordGate">
+  <div class="password-box">
+    <h2>CTO Executive Cockpit</h2>
+    <p>Inserisci la password per accedere</p>
+    <input id="accessPassword" type="password" placeholder="Password" autocomplete="current-password">
+    <button id="accessButton" type="button">Accedi</button>
+    <div id="passwordError">Password non corretta</div>
+  </div>
+</div>
+
 <div id="gate"><div class="login"><h2>CTO Executive Cockpit</h2><p>Inserisci la password</p><input id="pwd" type="password" placeholder="Password"><button id="login">Accedi</button><div id="err">Password non corretta</div></div></div>
 
 <div id="app" class="app">
@@ -108,5 +137,45 @@ const EX={csv(){let r=Q.get(),c=['category','title','owner','status','descriptio
 window.UI=UI;UI.init();
 function unlock(){const pwdEl=document.getElementById('pwd'),gateEl=document.getElementById('gate'),errEl=document.getElementById('err');if(pwdEl.value===C.pwd){sessionStorage.setItem('ctoAuth','1');gateEl.style.display='none';errEl.style.display='none'}else{errEl.style.display='block';pwdEl.value='';pwdEl.focus()}}
 document.getElementById('login').addEventListener('click',unlock);document.getElementById('pwd').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});if(sessionStorage.getItem('ctoAuth')==='1')document.getElementById('gate').style.display='none';
+
+
+const ACCESS_PASSWORD = '2013!';
+
+function unlockCockpit(){
+  const input = document.getElementById('accessPassword');
+  const error = document.getElementById('passwordError');
+  const gate = document.getElementById('passwordGate');
+
+  if(input.value === ACCESS_PASSWORD){
+    sessionStorage.setItem('ctoCockpitAuthenticated','true');
+    gate.style.display = 'none';
+    error.style.display = 'none';
+  }else{
+    error.style.display = 'block';
+    input.value = '';
+    input.focus();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  const gate = document.getElementById('passwordGate');
+  const input = document.getElementById('accessPassword');
+  const button = document.getElementById('accessButton');
+
+  if(sessionStorage.getItem('ctoCockpitAuthenticated') === 'true'){
+    gate.style.display = 'none';
+  }else{
+    gate.style.display = 'flex';
+    input.focus();
+  }
+
+  button.addEventListener('click', unlockCockpit);
+  input.addEventListener('keydown', function(event){
+    if(event.key === 'Enter'){
+      unlockCockpit();
+    }
+  });
+});
+
 </script>
 </body></html>
