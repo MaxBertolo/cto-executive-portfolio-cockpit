@@ -1,3 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CTO Executive Portfolio Cockpit</title>
+<style>
+:root{--bg:#f3f6fb;--panel:#fff;--panel2:#eef3f9;--text:#172033;--muted:#667085;--blue:#165dff;--line:#dfe6ef;--red:#dc2626;--green:#16a34a;--sidebar:255px;--radius:14px;--shadow:0 8px 28px rgba(22,45,90,.09)}
+body.dark{--bg:#0f172a;--panel:#172033;--panel2:#202b40;--text:#edf2ff;--muted:#9ba9bd;--line:#2d3950;--blue:#4d8dff;--shadow:0 10px 30px rgba(0,0,0,.25)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:var(--sidebar) 1fr;min-height:100vh}.app.sidebar-collapsed{--sidebar:76px}.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#0d2b57;color:white;padding:16px 12px}.brand{display:flex;gap:10px;align-items:center;padding:7px 8px 18px}.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#2f7cff,#62b0ff);display:grid;place-items:center;font-weight:800}.brand-copy{white-space:nowrap;overflow:hidden}.brand-copy strong{display:block}.brand-copy small{opacity:.75}.sidebar-collapsed .brand-copy,.sidebar-collapsed .nav-label,.sidebar-collapsed .cat-name,.sidebar-collapsed .sidebar-title,.sidebar-collapsed .cat-actions{display:none}
+.nav-btn,.category-row{width:100%;border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;margin:2px 0;text-align:left}.nav-btn:hover,.nav-btn.active,.category-row:hover{background:rgba(255,255,255,.12)}.ico{width:28px;text-align:center;font-size:18px}.sidebar-title{font-size:11px;text-transform:uppercase;letter-spacing:.13em;opacity:.62;padding:18px 10px 7px}.category-row{padding:7px 9px}.cat-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cat-count{background:rgba(255,255,255,.18);padding:2px 7px;border-radius:999px;font-size:11px}.cat-actions{display:flex}.cat-actions button{border:0;background:transparent;color:white;opacity:.7}
+.main{min-width:0}.header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--panel) 94%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;padding:12px 18px}.icon-btn,.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:9px 12px}.icon-btn{width:40px;height:40px;padding:0}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{background:var(--red);color:#fff;border-color:var(--red)}.search-wrap{flex:1;max-width:760px;position:relative}.search-wrap input{width:100%;padding:11px 12px 11px 38px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text)}.search-wrap span{position:absolute;left:13px;top:10px}.content{padding:20px;max-width:1700px;margin:auto}.view{display:none}.view.active{display:block}.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:16px}.page-head h1{margin:0;font-size:25px}.page-head p{margin:4px 0;color:var(--muted)}
+.grid-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.kpi,.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.kpi{padding:16px}.kpi .label{color:var(--muted);font-size:13px}.kpi .value{font-size:28px;font-weight:800;margin-top:6px}.dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.card{padding:16px}.card h3{margin:0 0 12px}.list{display:flex;flex-direction:column;gap:8px}.list-item{display:flex;justify-content:space-between;gap:12px;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);cursor:pointer}.list-item:hover{border-color:var(--blue)}.list-item small{color:var(--muted)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px;margin-bottom:12px}.toolbar select{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;padding:8px}.table-wrap{overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}table{border-collapse:collapse;width:100%;min-width:1040px}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:middle}th{background:var(--panel2);position:sticky;top:0;z-index:2;cursor:pointer;white-space:nowrap}tbody tr{cursor:pointer}tbody tr:hover td{background:color-mix(in srgb,var(--blue) 5%,var(--panel))}.title-cell{font-weight:700;min-width:180px}.text-cell{max-width:290px;white-space:normal;line-height:1.35}.badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;background:var(--panel2);border:1px solid var(--line);white-space:nowrap}.badge.blue{background:var(--blue);color:white;border-color:var(--blue)}.flag{display:inline-flex;padding:4px 7px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);font-size:12px;margin-right:4px}.actions{display:flex;gap:5px}.actions button{border:0;background:var(--panel2);border-radius:7px;padding:6px}
+.kanban{display:grid;grid-template-columns:repeat(8,minmax(245px,1fr));gap:12px;overflow:auto}.kanban-col{background:var(--panel2);border:1px solid var(--line);border-radius:12px;min-height:430px;padding:10px}.kanban-head{display:flex;justify-content:space-between;font-weight:800;margin-bottom:10px}.kanban-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:11px;margin-bottom:8px;cursor:pointer}.kanban-card:hover{border-color:var(--blue)}.kanban-card h4{margin:0 0 7px}.kanban-card p{margin:4px 0;color:var(--muted);font-size:12px}.timeline{position:relative;padding-left:28px}.timeline:before{content:"";position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--line)}.time-item{position:relative;margin-bottom:14px}.time-item:before{content:"";position:absolute;left:-22px;top:17px;width:11px;height:11px;border-radius:50%;background:var(--blue);border:3px solid var(--bg)}.time-card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px;cursor:pointer}.time-card:hover{border-color:var(--blue)}.roadmap{display:grid;grid-template-columns:repeat(4,minmax(270px,1fr));gap:12px;overflow:auto}.quarter{background:var(--panel2);border-radius:12px;padding:12px;min-height:400px}.road-item{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:9px;padding:10px;margin:8px 0;cursor:pointer}.road-item:hover{border-color:var(--blue)}
+.modal{position:fixed;inset:0;background:rgba(7,15,30,.62);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}.modal.open{display:flex}.modal-box{background:var(--panel);width:min(820px,96vw);max-height:94vh;overflow:auto;border-radius:16px;border:1px solid var(--line);box-shadow:0 20px 70px rgba(0,0,0,.35)}.modal-head{position:sticky;top:0;background:var(--panel);display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--line);z-index:2}.modal-head h2{margin:0}.modal-body{padding:18px}.modal-foot{display:flex;gap:8px;justify-content:flex-end;padding:14px 18px;border-top:1px solid var(--line)}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);font-weight:700}.field input,.field select,.field textarea{padding:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px}.field textarea{min-height:105px;resize:vertical}.checks{display:flex;gap:22px;padding:10px 0}.comments{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}.comment-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}.comment{padding:10px;border:1px solid var(--line);background:var(--panel2);border-radius:9px}.comment small{color:var(--muted)}.empty{padding:28px;text-align:center;color:var(--muted)}.overdue{color:var(--red);font-weight:800}.toast-wrap{position:fixed;right:18px;bottom:18px;z-index:200}.toast{background:#13213a;color:white;padding:11px 15px;border-radius:10px;margin-top:8px}
+#passwordGate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#081a35,#0d2b57);padding:20px}.password-box{background:#fff;color:#172033;padding:38px;border-radius:18px;max-width:390px;width:100%;text-align:center}.password-box input,.password-box button{width:100%;padding:13px;margin-top:12px;border-radius:9px}.password-box input{border:1px solid #dfe6ef}.password-box button{border:0;background:#165dff;color:#fff;font-weight:800}#passwordError{display:none;color:#dc2626;margin-top:12px;font-weight:700}
+
+.task-link{
+  border:0;
+  padding:0;
+  background:transparent;
+  color:var(--blue);
+  font-weight:800;
+  text-align:left;
+  cursor:pointer;
+}
+.task-link:hover{text-decoration:underline}
+.edit-task-btn{
+  white-space:nowrap;
+  padding:7px 10px!important;
+  color:var(--blue);
+  font-weight:700;
+}
+tbody tr td{transition:background .15s ease}
+
+@media(max-width:900px){.dashboard-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{position:fixed;left:-280px;width:255px;transition:.2s;z-index:30}.app.mobile-menu .sidebar{left:0}.content{padding:12px}.header{padding:10px}.hide-mobile{display:none}.page-head{flex-direction:column}.grid-kpi{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="passwordGate"><div class="password-box"><h2>CTO Executive Cockpit</h2><p>Inserisci la password per accedere</p><input id="accessPassword" type="password" placeholder="Password"><button id="accessButton">Accedi</button><div id="passwordError">Password non corretta</div></div></div>
+<div id="app" class="app">
+<aside class="sidebar"><div class="brand"><div class="logo">CTO</div><div class="brand-copy"><strong>Executive Cockpit</strong><small>Technology Portfolio</small></div></div><nav id="mainNav"><button class="nav-btn active" data-view="dashboard"><span class="ico">◫</span><span class="nav-label">Dashboard</span></button><button class="nav-btn" data-view="table"><span class="ico">☷</span><span class="nav-label">Vista Tabella</span></button><button class="nav-btn" data-view="kanban"><span class="ico">▦</span><span class="nav-label">Kanban</span></button><button class="nav-btn" data-view="timeline"><span class="ico">◷</span><span class="nav-label">Timeline</span></button><button class="nav-btn" data-view="roadmap"><span class="ico">↗</span><span class="nav-label">Roadmap</span></button></nav><div class="sidebar-title">Categorie</div><div id="categoryList"></div><button class="nav-btn" id="addCategoryBtn"><span class="ico">＋</span><span class="nav-label">Nuova categoria</span></button></aside>
+<main class="main"><header class="header"><button class="icon-btn" id="menuBtn">☰</button><div class="search-wrap"><span>⌕</span><input id="globalSearch" placeholder="Ricerca attività, owner, descrizione o next action..."></div><button class="icon-btn hide-mobile" id="themeBtn">◐</button><button class="btn hide-mobile" id="backupBtn">Backup</button><button class="btn primary" id="newTaskBtn">＋ Nuova attività</button></header><section class="content"><div id="dashboardView" class="view active"></div><div id="tableView" class="view"></div><div id="kanbanView" class="view"></div><div id="timelineView" class="view"></div><div id="roadmapView" class="view"></div></section></main>
+</div>
+<div class="modal" id="taskModal"><div class="modal-box"><div class="modal-head"><h2 id="taskModalTitle">Attività</h2><button class="icon-btn" data-close="taskModal">×</button></div><form id="taskForm"><div class="modal-body"><input type="hidden" name="id"><div class="form-grid"><div class="field"><label>Categoria</label><select name="category" required></select></div><div class="field"><label>Stato</label><select name="status"></select></div><div class="field full"><label>Titolo</label><input name="title" required></div><div class="field"><label>Owner</label><input name="owner"></div><div class="field"><label>Due Date</label><input type="date" name="dueDate"></div><div class="field full"><label>Descrizione</label><textarea name="description"></textarea></div><div class="field full"><label>Next Action</label><textarea name="nextAction"></textarea></div><div class="field full"><label>Flag</label><div class="checks"><label><input type="checkbox" name="mail"> ✉ Mail</label><label><input type="checkbox" name="tel"> ☎ Telefonata</label></div></div></div><div class="comments"><h3>Commenti</h3><div class="field"><textarea id="newComment" placeholder="Scrivi un commento..."></textarea><button type="button" class="btn" id="addCommentBtn">Aggiungi commento</button></div><div id="commentList" class="comment-list"></div></div></div><div class="modal-foot"><button type="button" class="btn danger" id="deleteTaskBtn" style="margin-right:auto">Elimina</button><button type="button" class="btn" data-close="taskModal">Annulla</button><button class="btn primary">Salva</button></div></form></div></div>
+<div class="modal" id="categoryModal"><div class="modal-box" style="max-width:480px"><div class="modal-head"><h2>Categoria</h2><button class="icon-btn" data-close="categoryModal">×</button></div><form id="categoryForm"><div class="modal-body"><input type="hidden" name="oldName"><div class="field"><label>Nome categoria</label><input name="name" required></div></div><div class="modal-foot"><button type="button" class="btn" data-close="categoryModal">Annulla</button><button class="btn primary">Salva</button></div></form></div></div>
+<div class="toast-wrap" id="toastWrap"></div>
+<script>
+'use strict';
+const CONFIG={storageKey:'ctoExecutivePortfolioCockpit.v1',categories:['Fix BB','Mobile','Infra','EN','CDN','M&E','Compliance','Budget','TV','HR','Corporate','AI','Inno','Revenue','Other','HUB','P-Cloud'],statuses:['To Do','Planned','In Progress','Waiting','On Hold','Escalated','Completed','Cancelled']};
+const u={uid:()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2),iso:()=>new Date().toISOString(),today:()=>new Date().toISOString().slice(0,10),esc:s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])),date:s=>s?new Date(s+'T00:00:00').toLocaleDateString('it-IT'):'—',datetime:s=>s?new Date(s).toLocaleString('it-IT'):'—',open:t=>!['Completed','Cancelled'].includes(t.status),overdue:t=>u.open(t)&&t.dueDate&&t.dueDate<u.today(),download(n,c,t='text/plain'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:t}));a.download=n;a.click();URL.revokeObjectURL(a.href)},toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.querySelector('#toastWrap').appendChild(e);setTimeout(()=>e.remove(),2200)}};
+const Store={state:null,defaults(){return{categories:CONFIG.categories.map((name,i)=>({name,order:i})),tasks:[],settings:{theme:'light',sidebar:false}}},load(){try{this.state=JSON.parse(localStorage.getItem(CONFIG.storageKey))||this.defaults()}catch{this.state=this.defaults()}this.state.categories||=this.defaults().categories;this.state.settings||={theme:'light',sidebar:false};this.state.tasks||=[];this.state.tasks.forEach(t=>{t.status||='To Do';t.owner||='';t.description||='';t.dueDate||='';t.nextAction||='';t.mail=!!t.mail;t.tel=!!t.tel;t.comments=Array.isArray(t.comments)?t.comments:[]})},save(){localStorage.setItem(CONFIG.storageKey,JSON.stringify(this.state))},newTask(o={}){const now=u.iso();return Object.assign({id:u.uid(),category:'Other',title:'',status:'To Do',owner:'',description:'',dueDate:'',nextAction:'',mail:false,tel:false,comments:[],createdAt:now,updatedAt:now},o)}};
+const Query={search:'',filters:{category:'',owner:'',status:'',mail:'',tel:'',scope:'all'},filtered(){const q=this.search.toLowerCase(),f=this.filters;return Store.state.tasks.filter(t=>{const hay=[t.category,t.title,t.owner,t.description,t.nextAction].join(' ').toLowerCase();if(q&&!hay.includes(q))return false;if(f.category&&t.category!==f.category)return false;if(f.owner&&t.owner!==f.owner)return false;if(f.status&&t.status!==f.status)return false;if(f.mail&&String(!!t.mail)!==f.mail)return false;if(f.tel&&String(!!t.tel)!==f.tel)return false;if(f.scope==='open'&&!u.open(t))return false;if(f.scope==='completed'&&t.status!=='Completed')return false;if(f.scope==='overdue'&&!u.overdue(t))return false;return true})}};
+const UI={currentView:'dashboard',sort:{key:'updatedAt',dir:-1},currentTaskId:null,init(){Store.load();document.body.classList.toggle('dark',Store.state.settings.theme==='dark');document.querySelector('#app').classList.toggle('sidebar-collapsed',Store.state.settings.sidebar);this.bind();this.renderAll()},bind(){document.querySelector('#mainNav').onclick=e=>{const b=e.target.closest('[data-view]');if(b)this.show(b.dataset.view)};document.querySelector('#newTaskBtn').onclick=()=>this.openTask();document.querySelector('#addCategoryBtn').onclick=()=>this.openCategory();document.querySelector('#menuBtn').onclick=()=>{if(innerWidth<760)document.querySelector('#app').classList.toggle('mobile-menu');else{Store.state.settings.sidebar=!Store.state.settings.sidebar;Store.save();document.querySelector('#app').classList.toggle('sidebar-collapsed')}};document.querySelector('#themeBtn').onclick=()=>{Store.state.settings.theme=document.body.classList.toggle('dark')?'dark':'light';Store.save()};document.querySelector('#globalSearch').oninput=e=>{Query.search=e.target.value;this.renderCurrent()};document.querySelector('#taskForm').onsubmit=e=>this.saveTask(e);document.querySelector('#categoryForm').onsubmit=e=>this.saveCategory(e);document.querySelector('#backupBtn').onclick=()=>Export.backup();document.querySelector('#deleteTaskBtn').onclick=()=>this.deleteCurrentTask();document.querySelector('#addCommentBtn').onclick=()=>this.addComment();document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>document.querySelector('#'+b.dataset.close).classList.remove('open'))},show(v){this.currentView=v;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.querySelector('#'+v+'View').classList.add('active');document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x.dataset.view===v));document.querySelector('#app').classList.remove('mobile-menu');this.renderCurrent()},renderAll(){this.renderCategories();this.renderDashboard();this.renderTable();this.renderKanban();this.renderTimeline();this.renderRoadmap()},renderCurrent(){({dashboard:()=>this.renderDashboard(),table:()=>this.renderTable(),kanban:()=>this.renderKanban(),timeline:()=>this.renderTimeline(),roadmap:()=>this.renderRoadmap()}[this.currentView])();this.renderCategories()},head(t,s,b=''){return `<div class="page-head"><div><h1>${t}</h1><p>${s}</p></div><div>${b}</div></div>`},renderCategories(){const counts=Store.state.tasks.reduce((a,t)=>(a[t.category]=(a[t.category]||0)+1,a),{}),box=document.querySelector('#categoryList');box.innerHTML=Store.state.categories.sort((a,b)=>a.order-b.order).map(c=>`<div class="category-row" data-cat="${u.esc(c.name)}"><span class="ico">▹</span><span class="cat-name">${u.esc(c.name)}</span><span class="cat-count">${counts[c.name]||0}</span><span class="cat-actions"><button data-edit="${u.esc(c.name)}">✎</button><button data-delete="${u.esc(c.name)}">×</button></span></div>`).join('');box.querySelectorAll('.category-row').forEach(r=>r.onclick=e=>{if(e.target.closest('button'))return;Query.filters.category=r.dataset.cat;this.show('table')});box.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>this.openCategory(b.dataset.edit));box.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>this.deleteCategory(b.dataset.delete))},summary(t){return{total:t.length,open:t.filter(u.open).length,completed:t.filter(x=>x.status==='Completed').length,overdue:t.filter(u.overdue).length,mail:t.filter(x=>x.mail).length,tel:t.filter(x=>x.tel).length,withoutOwner:t.filter(x=>!x.owner).length,withoutNext:t.filter(x=>!x.nextAction).length}},mini(t){return `<div class="list-item" onclick="UI.openTask('${t.id}')"><div><strong>${u.esc(t.title)}</strong><br><small>${u.esc(t.category)} · ${u.esc(t.owner||'Senza owner')}</small></div><div class="${u.overdue(t)?'overdue':''}">${u.date(t.dueDate)}</div></div>`},renderDashboard(){const t=Query.filtered(),s=this.summary(t),up=[...t].filter(x=>x.dueDate&&u.open(x)).sort((a,b)=>a.dueDate.localeCompare(b.dueDate)).slice(0,12),nn=t.filter(x=>u.open(x)&&!x.nextAction).slice(0,12);document.querySelector('#dashboardView').innerHTML=this.head('Executive Dashboard','Vista sintetica delle attività')+`<div class="grid-kpi">${[['Totale',s.total],['Aperte',s.open],['Completate',s.completed],['In ritardo',s.overdue],['Mail',s.mail],['Telefonate',s.tel],['Senza owner',s.withoutOwner],['Senza Next Action',s.withoutNext]].map(x=>`<div class="kpi"><div class="label">${x[0]}</div><div class="value">${x[1]}</div></div>`).join('')}</div><div class="dashboard-grid"><div class="card"><h3>Prossime scadenze</h3><div class="list">${up.map(x=>this.mini(x)).join('')||'<div class="empty">Nessuna scadenza</div>'}</div></div><div class="card"><h3>Senza Next Action</h3><div class="list">${nn.map(x=>this.mini(x)).join('')||'<div class="empty">Nessuna attività</div>'}</div></div></div>`},filterBar(){const tasks=Store.state.tasks,opts=(a,v)=>`<option value="">Tutti</option>`+[...new Set(a.filter(Boolean))].sort().map(x=>`<option ${x===v?'selected':''}>${u.esc(x)}</option>`).join('');return `<div class="toolbar" id="filterBar"><select data-filter="category">${opts(Store.state.categories.map(x=>x.name),Query.filters.category)}</select><select data-filter="owner">${opts(tasks.map(x=>x.owner),Query.filters.owner)}</select><select data-filter="status">${opts(CONFIG.statuses,Query.filters.status)}</select><select data-filter="mail"><option value="">Mail: tutte</option><option value="true" ${Query.filters.mail==='true'?'selected':''}>Sì</option><option value="false" ${Query.filters.mail==='false'?'selected':''}>No</option></select><select data-filter="tel"><option value="">Telefonata: tutte</option><option value="true" ${Query.filters.tel==='true'?'selected':''}>Sì</option><option value="false" ${Query.filters.tel==='false'?'selected':''}>No</option></select><select data-filter="scope"><option value="all">Tutte</option><option value="open" ${Query.filters.scope==='open'?'selected':''}>Aperte</option><option value="completed" ${Query.filters.scope==='completed'?'selected':''}>Completate</option><option value="overdue" ${Query.filters.scope==='overdue'?'selected':''}>In ritardo</option></select><button class="btn" id="clearFilters">Reset</button></div>`},bindFilters(){const b=document.querySelector('#filterBar');if(!b)return;b.querySelectorAll('[data-filter]').forEach(e=>e.onchange=()=>{Query.filters[e.dataset.filter]=e.value;this.renderCurrent()});b.querySelector('#clearFilters').onclick=()=>{Query.filters={category:'',owner:'',status:'',mail:'',tel:'',scope:'all'};this.renderCurrent()}},renderTable(){let t=Query.filtered();const {key,dir}=this.sort;t.sort((a,b)=>String(a[key]||'').localeCompare(String(b[key]||''),'it',{numeric:true})*dir);const cols=[['category','Categoria'],['title','Attività'],['owner','Owner'],['status','Stato'],['description','Descrizione'],['dueDate','Due Date'],['nextAction','Next Action'],['flags','Flag'],['actions','Azioni']];document.querySelector('#tableView').innerHTML=this.head('Portfolio Table',`${t.length} attività · clicca sulla riga, sul titolo o su Modifica`,`<button class="btn" onclick="Export.csv()">CSV</button> <button class="btn" onclick="Export.backup()">Backup</button>`)+this.filterBar()+`<div class="table-wrap"><table><thead><tr>${cols.map(c=>`<th data-sort="${c[0]}">${c[1]}</th>`).join('')}</tr></thead><tbody>${t.map(x=>`<tr onclick="UI.openTask('${x.id}')"><td><span class="badge blue">${u.esc(x.category)}</span></td><td class="title-cell"><button class="task-link" onclick="event.stopPropagation();UI.openTask(\'${x.id}\')">${u.esc(x.title)}</button></td><td>${u.esc(x.owner||'—')}</td><td><span class="badge">${u.esc(x.status)}</span></td><td class="text-cell">${u.esc(x.description||'—')}</td><td class="${u.overdue(x)?'overdue':''}">${u.date(x.dueDate)}</td><td class="text-cell">${u.esc(x.nextAction||'—')}</td><td>${x.mail?'<span class="flag">✉ Mail</span>':''}${x.tel?'<span class="flag">☎ Telefonata</span>':''}${!x.mail&&!x.tel?'—':''}</td><td><div class="actions"><button class="edit-task-btn" onclick="event.stopPropagation();UI.openTask(\'${x.id}\')" title="Modifica attività">✎ Modifica</button><button onclick="event.stopPropagation();Actions.duplicate('${x.id}')">⧉</button></div></td></tr>`).join('')||'<tr><td colspan="9" class="empty">Nessuna attività</td></tr>'}</tbody></table></div>`;this.bindFilters();document.querySelectorAll('#tableView th[data-sort]').forEach(th=>th.onclick=()=>{if(['flags','actions'].includes(th.dataset.sort))return;this.sort.dir=this.sort.key===th.dataset.sort?-this.sort.dir:1;this.sort.key=th.dataset.sort;this.renderTable()})},renderKanban(){const t=Query.filtered();document.querySelector('#kanbanView').innerHTML=this.head('Kanban','Clicca una card per modificarla o trascinala per cambiare stato')+this.filterBar()+`<div class="kanban">${CONFIG.statuses.map(s=>`<section class="kanban-col" data-status="${s}"><div class="kanban-head"><span>${s}</span><span class="badge">${t.filter(x=>x.status===s).length}</span></div>${t.filter(x=>x.status===s).map(x=>`<article class="kanban-card" draggable="true" data-id="${x.id}" onclick="UI.openTask('${x.id}')"><h4>${u.esc(x.title)}</h4><p>${u.esc(x.category)} · ${u.esc(x.owner||'Senza owner')}</p><p>${u.esc(x.nextAction||'Nessuna Next Action')}</p>${x.mail?'<span class="flag">✉</span>':''}${x.tel?'<span class="flag">☎</span>':''}</article>`).join('')}</section>`).join('')}</div>`;this.bindFilters();document.querySelectorAll('.kanban-card').forEach(c=>c.ondragstart=e=>{e.stopPropagation();e.dataTransfer.setData('text/task',c.dataset.id)});document.querySelectorAll('.kanban-col').forEach(c=>{c.ondragover=e=>e.preventDefault();c.ondrop=e=>{e.preventDefault();Actions.changeStatus(e.dataTransfer.getData('text/task'),c.dataset.status)}})},renderTimeline(){const t=Query.filtered().filter(x=>x.dueDate).sort((a,b)=>a.dueDate.localeCompare(b.dueDate));document.querySelector('#timelineView').innerHTML=this.head('Timeline','Attività ordinate per Due Date')+this.filterBar()+`<div class="timeline">${t.map(x=>`<div class="time-item"><div class="time-card" onclick="UI.openTask('${x.id}')"><strong class="${u.overdue(x)?'overdue':''}">${u.date(x.dueDate)} · ${u.esc(x.title)}</strong><p>${u.esc(x.category)} · ${u.esc(x.owner||'Senza owner')} · ${u.esc(x.status)}</p><p>${u.esc(x.nextAction||'Nessuna Next Action')}</p></div></div>`).join('')||'<div class="empty">Nessuna attività con Due Date</div>'}</div>`;this.bindFilters()},renderRoadmap(){const t=Query.filtered(),y=new Date().getFullYear(),q=n=>t.filter(x=>x.dueDate&&new Date(x.dueDate+'T00:00:00').getFullYear()===y&&Math.floor(new Date(x.dueDate+'T00:00:00').getMonth()/3)+1===n);document.querySelector('#roadmapView').innerHTML=this.head(`Roadmap ${y}`,'Attività posizionate automaticamente per trimestre')+this.filterBar()+`<div class="roadmap">${[1,2,3,4].map(n=>`<section class="quarter"><h3>Q${n}</h3>${q(n).map(x=>`<div class="road-item" onclick="UI.openTask('${x.id}')"><strong>${u.esc(x.title)}</strong><br><small>${u.date(x.dueDate)} · ${u.esc(x.owner||'Senza owner')}</small><p>${u.esc(x.nextAction||'Nessuna Next Action')}</p></div>`).join('')||'<div class="empty">Nessuna attività</div>'}</section>`).join('')}</div>`;this.bindFilters()},openTask(id=''){this.currentTaskId=id||null;const t=id?Store.state.tasks.find(x=>x.id===id):Store.newTask({category:Query.filters.category||'Other'}),f=document.querySelector('#taskForm');f.reset();document.querySelector('#taskModalTitle').textContent=id?'Modifica attività':'Nuova attività';f.category.innerHTML=Store.state.categories.sort((a,b)=>a.order-b.order).map(c=>`<option>${u.esc(c.name)}</option>`).join('');f.status.innerHTML=CONFIG.statuses.map(x=>`<option>${x}</option>`).join('');['id','category','title','status','owner','description','dueDate','nextAction'].forEach(k=>f.elements[k].value=t[k]||'');f.mail.checked=!!t.mail;f.tel.checked=!!t.tel;document.querySelector('#deleteTaskBtn').style.display=id?'inline-block':'none';document.querySelector('#newComment').value='';this.renderComments(t.comments||[]);document.querySelector('#taskModal').classList.add('open')},renderComments(c){document.querySelector('#commentList').innerHTML=c.length?[...c].reverse().map(x=>`<div class="comment"><div>${u.esc(x.text)}</div><small>${u.datetime(x.at)}</small></div>`).join(''):'<div class="empty">Nessun commento</div>'},addComment(){const text=document.querySelector('#newComment').value.trim();if(!text)return;if(!this.currentTaskId){u.toast('Salva prima la nuova attività');return}const t=Store.state.tasks.find(x=>x.id===this.currentTaskId);t.comments.push({id:u.uid(),text,at:u.iso()});t.updatedAt=u.iso();Store.save();document.querySelector('#newComment').value='';this.renderComments(t.comments);u.toast('Commento aggiunto')},saveTask(e){e.preventDefault();const f=e.target,d=new FormData(f),id=d.get('id');let t=id?Store.state.tasks.find(x=>x.id===id):Store.newTask();['category','title','status','owner','description','dueDate','nextAction'].forEach(k=>t[k]=d.get(k)||'');t.mail=d.has('mail');t.tel=d.has('tel');t.updatedAt=u.iso();if(!id)Store.state.tasks.push(t);Store.save();document.querySelector('#taskModal').classList.remove('open');this.renderAll();u.toast('Attività salvata')},deleteCurrentTask(){if(!this.currentTaskId)return;const t=Store.state.tasks.find(x=>x.id===this.currentTaskId);if(!confirm(`Eliminare "${t.title}"?`))return;Store.state.tasks=Store.state.tasks.filter(x=>x.id!==this.currentTaskId);Store.save();document.querySelector('#taskModal').classList.remove('open');this.currentTaskId=null;this.renderAll()},openCategory(n=''){const f=document.querySelector('#categoryForm');f.reset();f.oldName.value=n;f.name.value=n;document.querySelector('#categoryModal').classList.add('open')},saveCategory(e){e.preventDefault();const old=e.target.oldName.value,n=e.target.name.value.trim();if(!n)return;if(Store.state.categories.some(c=>c.name.toLowerCase()===n.toLowerCase()&&c.name!==old))return alert('Categoria già esistente');if(old){Store.state.categories.find(c=>c.name===old).name=n;Store.state.tasks.filter(t=>t.category===old).forEach(t=>t.category=n)}else Store.state.categories.push({name:n,order:Store.state.categories.length});Store.save();document.querySelector('#categoryModal').classList.remove('open');this.renderAll()},deleteCategory(n){if(!confirm(`Eliminare la categoria "${n}"? Le attività saranno spostate in Other.`))return;Store.state.tasks.filter(t=>t.category===n).forEach(t=>t.category='Other');Store.state.categories=Store.state.categories.filter(c=>c.name!==n);Store.save();this.renderAll()}};
+const Actions={duplicate(id){const t=Store.state.tasks.find(x=>x.id===id);if(!t)return;const n=Store.newTask({...structuredClone(t),id:u.uid(),title:t.title+' (copia)',comments:[],createdAt:u.iso(),updatedAt:u.iso()});Store.state.tasks.push(n);Store.save();UI.renderAll();u.toast('Attività duplicata')},changeStatus(id,status){const t=Store.state.tasks.find(x=>x.id===id);if(!t)return;t.status=status;t.updatedAt=u.iso();Store.save();UI.renderKanban();UI.renderDashboard()}};
+const Export={csv(){const r=Query.filtered(),cols=['category','title','owner','status','description','dueDate','nextAction','mail','tel'],cell=v=>`"${String(v??'').replace(/"/g,'""')}"`;u.download('cto_portfolio.csv','\ufeff'+[cols.join(','),...r.map(x=>cols.map(c=>cell(x[c])).join(','))].join('\n'),'text/csv;charset=utf-8')},backup(){u.download(`cto_cockpit_backup_${u.today()}.json`,JSON.stringify(Store.state,null,2),'application/json')}};
+window.UI=UI;window.Actions=Actions;window.Export=Export;UI.init();
+const ACCESS_PASSWORD='2013!';function unlock(){if(document.querySelector('#accessPassword').value===ACCESS_PASSWORD){sessionStorage.setItem('ctoAuth','1');document.querySelector('#passwordGate').style.display='none'}else{document.querySelector('#passwordError').style.display='block';document.querySelector('#accessPassword').value=''}}document.querySelector('#accessButton').onclick=unlock;document.querySelector('#accessPassword').onkeydown=e=>{if(e.key==='Enter')unlock()};if(sessionStorage.getItem('ctoAuth')==='1')document.querySelector('#passwordGate').style.display='none';
+</script>
+</body>
+</html>
+mi scrivi index completa
+
+Certo. Qui trovi l’index.html completo e aggiornato, con la Portfolio Table modificabile.
+
+index_completo.html
+
+Contiene già:
+
+password 2013!
+Dashboard
+Portfolio Table
+Kanban
+Timeline
+Roadmap
+categorie
+ricerca e filtri
+LocalStorage
+modifica attività cliccando sulla riga
+modifica cliccando sul titolo
+pulsante ✎ Modifica
+campi attività:
+Owner
+Descrizione
+Stato
+Due Date
+Next Action
+Mail
+Telefonata
+Commenti
+
+Per GitHub:
+
+Scarica il file.
+Rinominalo in index.html.
+Sostituisci il vecchio index.html nel repository.
+Fai Commit changes.
+Attendi il completamento di GitHub Pages.
+Aggiorna il sito con Cmd + Shift + R. 
+oggi 16:16
+oggi 17:51
+Elaborato per 1m 26s
+
+Ho riscritto il collegamento del form in modo più robusto: ora il pulsante Salva usa un vero evento submit, recupera esplicitamente il form, crea l’attività, la inserisce nell’elenco e la salva nel LocalStorage.
+
+index_salvataggio_corretto.html
+
+Sostituzione su GitHub
+Scarica il file.
+Rinominalo esattamente:
+index.html
+Nel repository GitHub elimina o sostituisci il precedente index.html.
+Premi Commit changes.
+Attendi che il deployment in Actions diventi verde.
+Apri il sito e forza l’aggiornamento:
+Cmd + Shift + R
+Verifica
+
+Dopo l’aggiornamento:
+
+Premi Nuova attività.
+Compila almeno il campo Attività, che è obbligatorio.
+Premi Salva.
+Deve comparire il messaggio:
+Nuova attività aggiunta
+L’attività deve apparire subito nella tabella.
+Ricarica la pagina: l’attività deve essere ancora presente.
+
+È importante sostituire interamente il vecchio file e non incollare solo una parte del codice, perché il problema era nel collegamento JavaScript del form.
+
+quando aggiungo una attività poi il sistema non la salva. possiamo fare così prova a vedere se lo metti a posto, se no. metti un tasto duplica attivitò che mi aiuta
+Elaborato per 46s
+
+Ho corretto il salvataggio e aggiunto anche Duplica attività.
+
+index_salvataggio_e_duplica.html
+
+Ora funziona così:
+
+il campo Attività è obbligatorio;
+se provi a salvare senza titolo, compare un messaggio rosso;
+il pulsante Salva usa una gestione esplicita e non dipende dal comportamento automatico del form;
+dopo il salvataggio verifica anche che l’attività sia realmente presente nel LocalStorage;
+nella tabella trovi ✎ Modifica e ⧉ Duplica;
+dentro una attività già esistente trovi anche il pulsante ⧉ Duplica.
+
+Per GitHub:
+
+Scarica il file.
+Rinominalo index.html.
+Sostituisci completamente il vecchio file.
+Fai Commit changes.
+Attendi il deployment verde.
+Aggiorna con Cmd + Shift + R.
+
+Durante la prova, inserisci sempre almeno un testo nel campo Attività prima di premere Salva.
+
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CTO Executive Portfolio Cockpit</title>
+<style>
+:root{--bg:#f3f6fb;--p:#fff;--p2:#eef3f9;--t:#172033;--m:#667085;--l:#dfe6ef;--b:#165dff;--r:#dc2626;--g:#16a34a;--a:#f59e0b;--s:250px}
+body.dark{--bg:#0f172a;--p:#172033;--p2:#202b40;--t:#edf2ff;--m:#a7b2c5;--l:#2d3950;--b:#4d8dff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t)}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:var(--s) 1fr;min-height:100vh}.app.collapsed{--s:76px}
+aside{position:sticky;top:0;height:100vh;overflow:auto;background:#0d2b57;color:#fff;padding:16px 12px}.brand{display:flex;gap:10px;align-items:center;padding:6px 8px 18px}.logo{width:42px;height:42px;border-radius:12px;background:#2f7cff;display:grid;place-items:center;font-weight:800}.brand small{display:block;opacity:.7}
+.app.collapsed .brand span,.app.collapsed .cat-name,.app.collapsed .cat-actions,.app.collapsed .side-title{display:none}
+.side-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;opacity:.6;padding:18px 10px 7px}
+.cat,.side-btn{width:100%;border:0;background:transparent;color:#fff;display:flex;align-items:center;gap:8px;padding:9px;border-radius:9px;text-align:left}.cat:hover,.side-btn:hover{background:#ffffff1f}.cat-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.count{background:#ffffff24;border-radius:99px;padding:2px 7px;font-size:11px}.cat-actions button{border:0;background:transparent;color:#fff}
+main{min-width:0}.header{position:sticky;top:0;z-index:10;display:flex;gap:10px;align-items:center;padding:12px 18px;background:var(--p);border-bottom:1px solid var(--l)}.search{flex:1;max-width:760px}.search input{width:100%;padding:11px;border:1px solid var(--l);border-radius:9px;background:var(--p);color:var(--t)}
+.btn,.icon{border:1px solid var(--l);background:var(--p);color:var(--t);border-radius:9px;padding:9px 12px}.icon{width:40px;height:40px;padding:0}.primary{background:var(--b);border-color:var(--b);color:#fff}.danger{background:var(--r);border-color:var(--r);color:#fff}
+.content{padding:20px;max-width:1700px;margin:auto}.head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:15px}.head h1{margin:0;font-size:25px}.head p{margin:4px 0;color:var(--m)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:12px}.kpi{background:var(--p);border:1px solid var(--l);border-radius:12px;padding:14px}.kpi span{color:var(--m);font-size:13px}.kpi b{display:block;font-size:26px;margin-top:5px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;background:var(--p);border:1px solid var(--l);border-radius:12px;padding:11px;margin-bottom:12px}.toolbar select{padding:8px;border:1px solid var(--l);border-radius:8px;background:var(--p);color:var(--t)}
+.wrap{overflow:auto;background:var(--p);border:1px solid var(--l);border-radius:12px}table{border-collapse:collapse;width:100%;min-width:1100px}th,td{padding:11px;border-bottom:1px solid var(--l);text-align:left;font-size:13px;vertical-align:middle}th{background:var(--p2);position:sticky;top:0;cursor:pointer;white-space:nowrap}tbody tr{cursor:pointer}tbody tr:hover td{background:color-mix(in srgb,var(--b) 5%,var(--p))}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:var(--p2);border:1px solid var(--l);font-size:11px;font-weight:700}.blue{background:var(--b);border-color:var(--b);color:#fff}.green{background:var(--g);border-color:var(--g);color:#fff}.amber{background:#fbbf24;border-color:#fbbf24;color:#111}.red{background:var(--r);border-color:var(--r);color:#fff}.flags{display:flex;gap:5px;flex-wrap:wrap}.flag{padding:4px 7px;border-radius:8px;background:var(--p2);border:1px solid var(--l)}.desc{max-width:320px;white-space:normal;line-height:1.35}.late{color:var(--r);font-weight:800}
+.modal{position:fixed;inset:0;background:#07101ea8;display:none;align-items:center;justify-content:center;z-index:100;padding:18px}.modal.open{display:flex}.box{width:min(800px,96vw);max-height:94vh;overflow:auto;background:var(--p);border-radius:15px}.mh,.mf{display:flex;align-items:center;padding:15px 18px;border-bottom:1px solid var(--l)}.mh{justify-content:space-between}.mf{justify-content:flex-end;gap:8px;border-top:1px solid var(--l);border-bottom:0}.mb{padding:18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:5px}.full{grid-column:1/-1}.field label{font-size:12px;color:var(--m);font-weight:700}.field input,.field select,.field textarea{padding:10px;border:1px solid var(--l);border-radius:8px;background:var(--p);color:var(--t)}textarea{min-height:120px;resize:vertical}.checks{display:flex;gap:22px;padding:8px 0}
+#gate{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#081a35,#0d2b57)}.login{background:#fff;color:#172033;width:min(390px,90vw);padding:35px;border-radius:17px;text-align:center}.login input,.login button{width:100%;padding:13px;margin-top:12px;border-radius:9px}.login input{border:1px solid #ddd}.login button{border:0;background:#165dff;color:#fff;font-weight:800}#err{display:none;color:#d00;margin-top:10px}
+.toast{position:fixed;right:18px;bottom:18px;background:#13213a;color:#fff;padding:11px 15px;border-radius:9px}
+@media(max-width:760px){.app{grid-template-columns:1fr}aside{position:fixed;left:-270px;width:250px;z-index:20;transition:.2s}.app.menu aside{left:0}.content{padding:12px}.hide{display:none}.head{flex-direction:column}.grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<div id="gate"><div class="login"><h2>CTO Executive Cockpit</h2><p>Inserisci la password</p><input id="pwd" type="password" placeholder="Password"><button id="login">Accedi</button><div id="err">Password non corretta</div></div></div>
+
+<div id="app" class="app">
+<aside>
+  <div class="brand"><div class="logo">CTO</div><span><b>Executive Cockpit</b><small>Technology Portfolio</small></span></div>
+  <button class="side-btn"><span>☷</span><span class="cat-name">Dashboard</span></button>
+  <div class="side-title">Categorie</div><div id="cats"></div>
+  <button class="side-btn" id="newCat"><span>＋</span><span class="cat-name">Nuova categoria</span></button>
+</aside>
+<main>
+  <div class="header">
+    <button class="icon" id="menu">☰</button>
+    <div class="search"><input id="search" placeholder="Ricerca per attività, owner, descrizione o categoria..."></div>
+    <button class="icon hide" id="theme">◐</button>
+    <button class="btn hide" id="backup">Backup</button>
+    <button class="btn primary" id="newTask">＋ Nuova attività</button>
+  </div>
+  <div class="content">
+    <div class="head"><div><h1>Portfolio Dashboard</h1><p>Clicca su una riga o su Modifica per aprire l’attività.</p></div><div><button class="btn" id="csv">CSV</button> <button class="btn" onclick="print()">PDF</button></div></div>
+    <div class="kpis" id="kpis"></div>
+    <div id="filters"></div>
+    <div id="table"></div>
+  </div>
+</main>
+</div>
+
+<div class="modal" id="taskModal"><div class="box">
+  <div class="mh"><h2 id="taskTitle">Attività</h2><button class="icon" data-close="taskModal">×</button></div>
+  <form id="taskForm"><div class="mb"><input type="hidden" name="id"><div class="grid">
+    <div class="field"><label>Categoria</label><select name="category"></select></div>
+    <div class="field"><label>Stato</label><select name="status"></select></div>
+    <div class="field full"><label>Attività</label><input name="title" required></div>
+    <div class="field"><label>Owner</label><input name="owner"></div>
+    <div class="field"><label>Due Date</label><input type="date" name="dueDate"></div>
+    <div class="field full"><label>Descrizione</label><textarea name="description"></textarea></div>
+    <div class="field full"><label>Flag</label><div class="checks"><label><input type="checkbox" name="mail"> ✉ Mail</label><label><input type="checkbox" name="tel"> ☎ Telefonata</label></div></div>
+  </div></div><div class="mf"><button type="button" class="btn danger" id="del" style="margin-right:auto">Elimina</button><button type="button" class="btn" data-close="taskModal">Annulla</button><button type="submit" class="btn primary">Salva</button></div></form>
+</div></div>
+
+<div class="modal" id="catModal"><div class="box" style="max-width:480px">
+  <div class="mh"><h2>Categoria</h2><button class="icon" data-close="catModal">×</button></div>
+  <form id="catForm"><div class="mb"><input type="hidden" name="old"><div class="field"><label>Nome categoria</label><input name="name" required></div></div><div class="mf"><button type="button" class="btn" data-close="catModal">Annulla</button><button type="submit" class="btn primary">Salva</button></div></form>
+</div></div>
+<div id="toast"></div>
+
+<script>
+const C={key:'ctoExecutivePortfolioCockpit.v1',pwd:'2013!',cats:['Fix BB','Mobile','Infra','EN','CDN','M&E','Compliance','Budget','TV','HR','Corporate','AI','Inno','Revenue','Other','HUB','P-Cloud'],st:['To Do','Planned','In Progress','Waiting','On Hold','Escalated','Completed','Cancelled']};
+const u={id:()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2),iso:()=>new Date().toISOString(),today:()=>new Date().toISOString().slice(0,10),esc:s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])),date:s=>s?new Date(s+'T00:00:00').toLocaleDateString('it-IT'):'—',open:t=>!['Completed','Cancelled'].includes(t.status),late:t=>u.open(t)&&t.dueDate&&t.dueDate<u.today(),toast:s=>{let e=document.createElement('div');e.className='toast';e.textContent=s;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)},dl:(n,c,t)=>{let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:t}));a.download=n;a.click();URL.revokeObjectURL(a.href)}};
+const S={d:null,def(){return{categories:C.cats.map((name,order)=>({name,order})),tasks:[],settings:{theme:'light',sidebar:false}}},load(){try{this.d=JSON.parse(localStorage.getItem(C.key))||this.def()}catch{this.d=this.def()}this.d.categories||=this.def().categories;this.d.tasks||=[];this.d.settings||={theme:'light',sidebar:false};this.d.tasks.forEach(t=>{t.id||=u.id();t.category||='Other';t.title||='';t.owner||='';t.status||='To Do';t.description||='';t.dueDate||='';t.mail=!!t.mail;t.tel=!!t.tel;t.createdAt||=u.iso();t.updatedAt||=t.createdAt});this.save()},save(){localStorage.setItem(C.key,JSON.stringify(this.d))},new(o={}){let n=u.iso();return Object.assign({id:u.id(),category:'Other',title:'',owner:'',status:'To Do',description:'',dueDate:'',mail:false,tel:false,createdAt:n,updatedAt:n},o)}};
+const Q={q:'',f:{category:'',owner:'',status:'',mail:'',tel:'',scope:'all'},get(){let q=this.q.toLowerCase(),f=this.f;return S.d.tasks.filter(t=>{let h=[t.category,t.title,t.owner,t.status,t.description].join(' ').toLowerCase();return(!q||h.includes(q))&&(!f.category||t.category===f.category)&&(!f.owner||t.owner===f.owner)&&(!f.status||t.status===f.status)&&(!f.mail||String(!!t.mail)===f.mail)&&(!f.tel||String(!!t.tel)===f.tel)&&!(f.scope==='open'&&!u.open(t))&&!(f.scope==='completed'&&t.status!=='Completed')&&!(f.scope==='overdue'&&!u.late(t))})}};
+const UI={id:null,sort:{k:'updatedAt',d:-1},init(){S.load();document.body.classList.toggle('dark',S.d.settings.theme==='dark');document.querySelector('#app').classList.toggle('collapsed',S.d.settings.sidebar);this.bind();this.render()},bind(){
+const newTaskBtn=document.getElementById('newTask');
+const newCatBtn=document.getElementById('newCat');
+const menuBtn=document.getElementById('menu');
+const themeBtn=document.getElementById('theme');
+const searchInput=document.getElementById('search');
+const taskFormEl=document.getElementById('taskForm');
+const saveTaskBtn=document.getElementById('saveTaskBtn');
+const duplicateModalBtn=document.getElementById('dupModal');
+const catFormEl=document.getElementById('catForm');
+const deleteBtn=document.getElementById('del');
+const backupBtn=document.getElementById('backup');
+const csvBtn=document.getElementById('csv');
+newTaskBtn.addEventListener('click',()=>this.open());
+newCatBtn.addEventListener('click',()=>this.openCat());
+menuBtn.addEventListener('click',()=>{const appEl=document.getElementById('app');if(innerWidth<760)appEl.classList.toggle('menu');else{S.d.settings.sidebar=!S.d.settings.sidebar;S.save();appEl.classList.toggle('collapsed')}});
+themeBtn.addEventListener('click',()=>{S.d.settings.theme=document.body.classList.toggle('dark')?'dark':'light';S.save()});
+searchInput.addEventListener('input',e=>{Q.q=e.target.value;this.render()});
+taskFormEl.addEventListener('submit',e=>this.saveTask(e));
+saveTaskBtn.addEventListener('click',()=>this.saveTask());
+duplicateModalBtn.addEventListener('click',()=>this.duplicateCurrent());
+catFormEl.addEventListener('submit',e=>this.saveCat(e));
+deleteBtn.addEventListener('click',()=>this.remove());
+backupBtn.addEventListener('click',()=>EX.backup());
+csvBtn.addEventListener('click',()=>EX.csv());
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.close).classList.remove('open')))
+},render(){this.cats();this.kpis();this.filters();this.table()},cats(){let c=S.d.tasks.reduce((a,t)=>(a[t.category]=(a[t.category]||0)+1,a),{});cats.innerHTML=S.d.categories.sort((a,b)=>a.order-b.order).map(x=>`<div class="cat" data-c="${u.esc(x.name)}"><span>▹</span><span class="cat-name">${u.esc(x.name)}</span><span class="count">${c[x.name]||0}</span><span class="cat-actions"><button data-e="${u.esc(x.name)}">✎</button><button data-x="${u.esc(x.name)}">×</button></span></div>`).join('');cats.querySelectorAll('.cat').forEach(r=>r.onclick=e=>{if(e.target.closest('button'))return;Q.f.category=r.dataset.c;this.render();app.classList.remove('menu')});cats.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>this.openCat(b.dataset.e));cats.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>this.delCat(b.dataset.x))},kpis(){let t=Q.get(),m=[['Totale',t.length],['Aperte',t.filter(u.open).length],['Completate',t.filter(x=>x.status==='Completed').length],['In ritardo',t.filter(u.late).length],['Mail',t.filter(x=>x.mail).length],['Telefonate',t.filter(x=>x.tel).length],['Senza Owner',t.filter(x=>!x.owner).length]];kpis.innerHTML=m.map(x=>`<div class="kpi"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('')},opts(a,v){return'<option value="">Tutti</option>'+[...new Set(a.filter(Boolean))].sort().map(x=>`<option ${x===v?'selected':''}>${u.esc(x)}</option>`).join('')},filters(){filters.innerHTML=`<div class="toolbar" id="fb"><select data-f="category">${this.opts(S.d.categories.map(x=>x.name),Q.f.category)}</select><select data-f="owner">${this.opts(S.d.tasks.map(x=>x.owner),Q.f.owner)}</select><select data-f="status">${this.opts(C.st,Q.f.status)}</select><select data-f="mail"><option value="">Mail: tutte</option><option value="true" ${Q.f.mail==='true'?'selected':''}>Sì</option><option value="false" ${Q.f.mail==='false'?'selected':''}>No</option></select><select data-f="tel"><option value="">Telefonata: tutte</option><option value="true" ${Q.f.tel==='true'?'selected':''}>Sì</option><option value="false" ${Q.f.tel==='false'?'selected':''}>No</option></select><select data-f="scope"><option value="all">Tutte</option><option value="open" ${Q.f.scope==='open'?'selected':''}>Solo aperte</option><option value="completed" ${Q.f.scope==='completed'?'selected':''}>Completate</option><option value="overdue" ${Q.f.scope==='overdue'?'selected':''}>In ritardo</option></select><button class="btn" id="reset">Reset</button></div>`;document.querySelectorAll('#fb [data-f]').forEach(e=>e.onchange=()=>{Q.f[e.dataset.f]=e.value;this.render()});reset.onclick=()=>{Q.f={category:'',owner:'',status:'',mail:'',tel:'',scope:'all'};this.render()}},table(){let t=Q.get(),s=this.sort;t.sort((a,b)=>String(a[s.k]??'').localeCompare(String(b[s.k]??''),'it',{numeric:true})*s.d);let cols=[['category','Categoria'],['title','Attività'],['owner','Owner'],['status','Stato'],['description','Descrizione'],['dueDate','Due Date'],['flags','Flag'],['actions','Azioni']];table.innerHTML=`<div class="wrap"><table><thead><tr>${cols.map(c=>`<th data-s="${c[0]}">${c[1]} ${s.k===c[0]?(s.d===1?'▲':'▼'):''}</th>`).join('')}</tr></thead><tbody>${t.length?t.map(x=>`<tr onclick="UI.open('${x.id}')"><td><span class="badge blue">${u.esc(x.category)}</span></td><td><b>${u.esc(x.title)}</b></td><td>${u.esc(x.owner||'—')}</td><td><span class="badge ${x.status==='Completed'?'green':x.status==='Escalated'?'red':x.status==='Waiting'?'amber':''}">${u.esc(x.status)}</span></td><td class="desc">${u.esc(x.description||'—')}</td><td class="${u.late(x)?'late':''}">${u.date(x.dueDate)}</td><td><div class="flags">${x.mail?'<span class="flag">✉ Mail</span>':''}${x.tel?'<span class="flag">☎ Telefonata</span>':''}${!x.mail&&!x.tel?'—':''}</div></td><td><button class="btn" onclick="event.stopPropagation();UI.open('${x.id}')">✎ Modifica</button> <button class="btn" onclick="event.stopPropagation();UI.duplicate('${x.id}')">⧉ Duplica</button></td></tr>`).join(''):'<tr><td colspan="8" style="text-align:center;padding:30px">Nessuna attività</td></tr>'}</tbody></table></div>`;document.querySelectorAll('th[data-s]').forEach(h=>h.onclick=()=>{if(['flags','actions'].includes(h.dataset.s))return;this.sort.d=this.sort.k===h.dataset.s?-this.sort.d:1;this.sort.k=h.dataset.s;this.table()})},open(id=''){this.id=id||null;const task=id?S.d.tasks.find(x=>x.id===id):S.new({category:Q.f.category||'Other'});const form=document.getElementById('taskForm');form.reset();document.getElementById('taskTitle').textContent=id?'Modifica attività':'Nuova attività';form.elements.category.innerHTML=S.d.categories.sort((a,b)=>a.order-b.order).map(x=>`<option>${u.esc(x.name)}</option>`).join('');form.elements.status.innerHTML=C.st.map(x=>`<option>${x}</option>`).join('');form.elements.id.value=id||'';['category','title','owner','status','description','dueDate'].forEach(k=>form.elements[k].value=task[k]||'');form.elements.mail.checked=!!task.mail;form.elements.tel.checked=!!task.tel;document.getElementById('del').style.display=id?'inline-block':'none';document.getElementById('dupModal').style.display=id?'inline-block':'none';document.getElementById('formError').style.display='none';document.getElementById('formError').textContent='';document.getElementById('taskModal').classList.add('open')},saveTask(e){if(e)e.preventDefault();const form=document.getElementById('taskForm');const error=document.getElementById('formError');const title=String(form.elements.title.value||'').trim();if(!title){error.textContent='Inserisci il nome dell’attività prima di salvare.';error.style.display='block';form.elements.title.focus();return false}error.style.display='none';const id=String(form.elements.id.value||'').trim();let task=id?S.d.tasks.find(x=>x.id===id):null;const isNew=!task;if(!task)task=S.new();task.category=form.elements.category.value||'Other';task.title=title;task.owner=String(form.elements.owner.value||'').trim();task.status=form.elements.status.value||'To Do';task.description=String(form.elements.description.value||'').trim();task.dueDate=form.elements.dueDate.value||'';task.mail=form.elements.mail.checked;task.tel=form.elements.tel.checked;task.updatedAt=u.iso();if(isNew)S.d.tasks.push(task);S.save();const check=JSON.parse(localStorage.getItem(C.key)||'{}');if(!Array.isArray(check.tasks)||!check.tasks.some(x=>x.id===task.id)){error.textContent='Errore nel salvataggio. Riprova o verifica che il browser consenta il LocalStorage.';error.style.display='block';return false}document.getElementById('taskModal').classList.remove('open');this.id=null;this.render();u.toast(isNew?'Nuova attività aggiunta':'Attività aggiornata');return true},duplicate(id){const source=S.d.tasks.find(x=>x.id===id);if(!source)return;const copy=S.new({...structuredClone(source),id:u.id(),title:source.title+' (copia)',createdAt:u.iso(),updatedAt:u.iso()});S.d.tasks.push(copy);S.save();this.render();u.toast('Attività duplicata')},duplicateCurrent(){if(this.id)this.duplicate(this.id)},remove(){if(!this.id)return;let t=S.d.tasks.find(x=>x.id===this.id);if(!confirm(`Eliminare "${t.title}"?`))return;S.d.tasks=S.d.tasks.filter(x=>x.id!==this.id);S.save();taskModal.classList.remove('open');this.render()},openCat(n=''){catForm.reset();catForm.old.value=n;catForm.name.value=n;catModal.classList.add('open')},saveCat(e){e.preventDefault();let o=e.target.old.value,n=e.target.name.value.trim();if(!n)return;if(S.d.categories.some(x=>x.name.toLowerCase()===n.toLowerCase()&&x.name!==o))return alert('Categoria già esistente');if(o){S.d.categories.find(x=>x.name===o).name=n;S.d.tasks.filter(x=>x.category===o).forEach(x=>x.category=n)}else S.d.categories.push({name:n,order:S.d.categories.length});S.save();catModal.classList.remove('open');this.render()},delCat(n){if(n==='Other')return alert('Other non può essere eliminata');if(!confirm(`Eliminare "${n}"?`))return;S.d.tasks.filter(x=>x.category===n).forEach(x=>x.category='Other');S.d.categories=S.d.categories.filter(x=>x.name!==n);S.save();this.render()}};
+const EX={csv(){let r=Q.get(),c=['category','title','owner','status','description','dueDate','mail','tel'],q=v=>`"${String(v??'').replace(/"/g,'""')}"`;u.dl('cto_portfolio.csv','\ufeff'+[c.join(','),...r.map(x=>c.map(k=>q(x[k])).join(','))].join('\n'),'text/csv;charset=utf-8')},backup(){u.dl(`cto_cockpit_backup_${u.today()}.json`,JSON.stringify(S.d,null,2),'application/json')}};
+window.UI=UI;UI.init();
+function unlock(){const pwdEl=document.getElementById('pwd'),gateEl=document.getElementById('gate'),errEl=document.getElementById('err');if(pwdEl.value===C.pwd){sessionStorage.setItem('ctoAuth','1');gateEl.style.display='none';errEl.style.display='none'}else{errEl.style.display='block';pwdEl.value='';pwdEl.focus()}}
+document.getElementById('login').addEventListener('click',unlock);document.getElementById('pwd').addEventListener('keydown',e=>{if(e.key==='Enter')unlock()});if(sessionStorage.getItem('ctoAuth')==='1')document.getElementById('gate').style.display='none';
+</script>
+</body></html>
+manca accesso con password
+
+Ho aggiunto di nuovo l’accesso con password al file corretto con salvataggio e duplicazione.
+
+index_completo_password_salvataggio_duplica.html
+
+Password:
+
+2013!
+
+Il file ora include:
+
+accesso con password;
+creazione nuova attività;
+salvataggio nel LocalStorage;
+modifica attività;
+duplicazione attività;
+Dashboard semplificata;
+filtri;
+categorie;
+backup.
+
+Per GitHub:
+
+Scarica il file.
+Rinominalo index.html.
+Sostituisci il vecchio file nel repository.
+Fai Commit changes.
+Attendi il deployment.
+Aggiorna con Cmd + Shift + R. 
 <!doctype html>
 <html lang="it">
 <head>
@@ -179,3 +480,4 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </script>
 </body></html>
+Chat vocale terminata
