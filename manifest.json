@@ -1,20 +1,8 @@
 {
-  "name": "CTO Cockpit",
-  "short_name": "Cockpit",
-  "display": "standalone",
+  "name": "CTO Executive Portfolio Cockpit",
+  "short_name": "CTO Cockpit",
   "start_url": "./",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
-  "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+  "display": "standalone",
+  "background_color": "#f3f6fb",
+  "theme_color": "#0d2b57"
 }
